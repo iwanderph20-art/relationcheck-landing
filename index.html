@@ -1,1320 +1,245 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RelationCheck - Know Your Relationship Health Before It's Too Late</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Recoleta:wght@400;600;700&family=Satoshi:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* Soft, warm relationship-focused palette */
-            --blush: #FFE5E5;
-            --rose: #FF6B9D;
-            --deep-rose: #C7305C;
-            --mint: #A8E6CF;
-            --sage: #6B8E7F;
-            --cream: #FFF9F5;
-            --warm-white: #FFFCFA;
-            --charcoal: #2D3436;
-            --soft-gray: #8B949E;
-            --coral: #FF8A80;
-            
-            /* Typography */
-            --font-display: 'Recoleta', serif;
-            --font-body: 'Satoshi', sans-serif;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: var(--font-body);
-            background: var(--warm-white);
-            color: var(--charcoal);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        /* Subtle grain texture overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-        }
-        
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.5rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 252, 250, 0.9);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 107, 157, 0.1);
-        }
-        
-        .logo {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--charcoal);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--rose);
-        }
-        
-        .cta-nav {
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            box-shadow: 0 4px 20px rgba(255, 107, 157, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .cta-nav:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(255, 107, 157, 0.4);
-        }
-        
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 0 4rem;
-            padding-top: 100px;
-            background: linear-gradient(135deg, var(--blush) 0%, var(--warm-white) 50%, var(--mint) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(255, 107, 157, 0.15), transparent);
-            border-radius: 50%;
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(168, 230, 207, 0.2), transparent);
-            border-radius: 50%;
-            animation: float 15s ease-in-out infinite reverse;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(5deg); }
-            66% { transform: translate(-20px, 20px) rotate(-5deg); }
-        }
-        
-        .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 6rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero-text {
-            animation: fadeInUp 1s ease-out;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .hero-badge {
-            display: inline-block;
-            background: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            color: var(--rose);
-            font-weight: 600;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .hero-text h1 {
-            font-family: var(--font-display);
-            font-size: 5rem;
-            line-height: 1.1;
-            color: var(--charcoal);
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-        
-        .hero-text h1 .gradient-text {
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero-text .subtitle {
-            font-size: 1.4rem;
-            color: var(--soft-gray);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        
-        .hero-text .subtitle strong {
-            color: var(--charcoal);
-            font-weight: 600;
-        }
-        
-        .trust-indicators {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-        
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        
-        .trust-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--mint), var(--sage));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-        
-        .trust-text {
-            font-size: 0.95rem;
-            color: var(--charcoal);
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            color: white;
-            padding: 1.3rem 3rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.35);
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(255, 107, 157, 0.5);
-        }
-        
-        .btn-secondary {
-            background: white;
-            color: var(--rose);
-            padding: 1.3rem 3rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            border: 2px solid var(--rose);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--rose);
-            color: white;
-            transform: translateY(-3px);
-        }
-        
-        .disclaimer-mini {
-            font-size: 0.85rem;
-            color: var(--soft-gray);
-            font-style: italic;
-        }
-        
-        /* Hero Visual */
-        .hero-visual {
-            position: relative;
-            animation: fadeInRight 1s ease-out 0.3s both;
-        }
-        
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .score-card {
-            background: white;
-            border-radius: 30px;
-            padding: 3rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .score-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(90deg, var(--rose), var(--mint));
-        }
-        
-        .score-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .score-header h3 {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            color: var(--charcoal);
-            margin-bottom: 0.5rem;
-        }
-        
-        .score-header p {
-            color: var(--soft-gray);
-            font-size: 0.95rem;
-        }
-        
-        .score-circle {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 2rem;
-            position: relative;
-        }
-        
-        .score-number {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: var(--font-display);
-            font-size: 4rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .score-label {
-            text-align: center;
-            color: var(--soft-gray);
-            font-size: 0.9rem;
-            margin-top: -1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .score-breakdown {
-            display: grid;
-            gap: 1rem;
-        }
-        
-        .score-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: var(--blush);
-            border-radius: 15px;
-        }
-        
-        .score-item-name {
-            font-weight: 600;
-            color: var(--charcoal);
-        }
-        
-        .score-item-value {
-            font-weight: 700;
-            color: var(--rose);
-        }
-        
-        /* Problem Section */
-        .problem-section {
-            padding: 8rem 4rem;
-            background: var(--cream);
-            text-align: center;
-        }
-        
-        .section-header {
-            max-width: 800px;
-            margin: 0 auto 5rem;
-        }
-        
-        .section-badge {
-            display: inline-block;
-            background: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            color: var(--rose);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .section-header h2 {
-            font-family: var(--font-display);
-            font-size: 3.5rem;
-            color: var(--charcoal);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-        
-        .section-header p {
-            font-size: 1.3rem;
-            color: var(--soft-gray);
-            line-height: 1.7;
-        }
-        
-        .problems-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-        }
-        
-        .problem-card {
-            background: white;
-            padding: 3rem 2.5rem;
-            border-radius: 25px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s ease;
-            text-align: left;
-        }
-        
-        .problem-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        }
-        
-        .problem-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--blush), var(--mint));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .problem-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            color: var(--charcoal);
-            margin-bottom: 1rem;
-        }
-        
-        .problem-card p {
-            color: var(--soft-gray);
-            line-height: 1.7;
-            font-size: 1.05rem;
-        }
-        
-        /* How It Works */
-        .how-it-works {
-            padding: 8rem 4rem;
-            background: white;
-        }
-        
-        .steps-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-top: 5rem;
-        }
-        
-        .step {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            align-items: center;
-            margin-bottom: 6rem;
-            position: relative;
-        }
-        
-        .step:nth-child(even) {
-            direction: rtl;
-        }
-        
-        .step:nth-child(even) > * {
-            direction: ltr;
-        }
-        
-        .step-number {
-            position: absolute;
-            top: -20px;
-            left: -40px;
-            font-family: var(--font-display);
-            font-size: 10rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--blush), var(--mint));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0.3;
-            z-index: 0;
-        }
-        
-        .step-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .step-content h3 {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: var(--charcoal);
-            margin-bottom: 1.5rem;
-        }
-        
-        .step-content p {
-            font-size: 1.2rem;
-            color: var(--soft-gray);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-        
-        .step-features {
-            list-style: none;
-            margin-top: 1.5rem;
-        }
-        
-        .step-features li {
-            padding: 0.8rem 0;
-            padding-left: 2rem;
-            position: relative;
-            color: var(--charcoal);
-            font-weight: 500;
-        }
-        
-        .step-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--mint);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        
-        .step-visual {
-            background: linear-gradient(135deg, var(--blush), var(--mint));
-            border-radius: 30px;
-            padding: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            min-height: 300px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Legal Disclaimer Section */
-        .disclaimer-section {
-            padding: 6rem 4rem;
-            background: linear-gradient(135deg, var(--blush), var(--warm-white));
-            border-top: 1px solid rgba(255, 107, 157, 0.1);
-        }
-        
-        .disclaimer-box {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            padding: 4rem;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-            border-left: 6px solid var(--rose);
-        }
-        
-        .disclaimer-box h3 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            color: var(--charcoal);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .disclaimer-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-        
-        .disclaimer-box p {
-            font-size: 1.1rem;
-            color: var(--soft-gray);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-        
-        .disclaimer-box strong {
-            color: var(--charcoal);
-            font-weight: 700;
-        }
-        
-        .disclaimer-list {
-            list-style: none;
-            margin-top: 2rem;
-        }
-        
-        .disclaimer-list li {
-            padding: 1rem 0;
-            padding-left: 2.5rem;
-            position: relative;
-            color: var(--charcoal);
-            border-bottom: 1px solid var(--blush);
-        }
-        
-        .disclaimer-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .disclaimer-list li::before {
-            content: 'ℹ';
-            position: absolute;
-            left: 0;
-            color: var(--rose);
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-        
-        /* Pricing */
-        .pricing-section {
-            padding: 8rem 4rem;
-            background: white;
-        }
-        
-        .pricing-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-top: 5rem;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-        }
-        
-        .pricing-card {
-            background: white;
-            border: 2px solid var(--blush);
-            border-radius: 30px;
-            padding: 3rem;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        
-        .pricing-card.popular {
-            border-color: var(--rose);
-            transform: scale(1.05);
-            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.2);
-        }
-        
-        .pricing-card:hover {
-            transform: scale(1.08);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        }
-        
-        .popular-badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            color: white;
-            padding: 0.5rem 2rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
-        }
-        
-        .pricing-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            color: var(--charcoal);
-            margin-bottom: 1rem;
-        }
-        
-        .pricing-price {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-        
-        .pricing-period {
-            color: var(--soft-gray);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-        
-        .pricing-features {
-            list-style: none;
-            margin: 2rem 0;
-            text-align: left;
-        }
-        
-        .pricing-features li {
-            padding: 0.8rem 0;
-            padding-left: 2rem;
-            position: relative;
-            color: var(--charcoal);
-        }
-        
-        .pricing-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--mint);
-            font-weight: 700;
-        }
-        
-        .pricing-card .btn-primary,
-        .pricing-card .btn-secondary {
-            width: 100%;
-            padding: 1.2rem;
-            margin-top: 1.5rem;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 10rem 4rem;
-            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
-            color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-            border-radius: 50%;
-        }
-        
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .cta-content h2 {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            line-height: 1.2;
-        }
-        
-        .cta-content p {
-            font-size: 1.4rem;
-            margin-bottom: 3rem;
-            opacity: 0.95;
-        }
-        
-        .cta-content .btn-primary {
-            background: white;
-            color: var(--rose);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        }
-        
-        .cta-content .btn-primary:hover {
-            background: var(--cream);
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--charcoal);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 4rem 4rem 2rem;
-        }
-        
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 4rem;
-            margin-bottom: 3rem;
-        }
-        
-        .footer-brand h3 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            background: linear-gradient(135deg, var(--rose), var(--coral));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-brand p {
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-        
-        .footer-column h4 {
-            color: white;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-column ul li a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-column ul li a:hover {
-            color: var(--rose);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* Mobile Responsive */
-        @media (max-width: 1024px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 4rem;
-            }
-            
-            .hero-text h1 {
-                font-size: 3.5rem;
-            }
-            
-            .problems-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .step {
-                grid-template-columns: 1fr;
-            }
-            
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem 2rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .hero {
-                padding: 0 2rem;
-            }
-            
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section-header h2 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.3">
+  <style type="text/css">
+    body {background-color: #fffbf9}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 21.6px Times; color: #222729; -webkit-text-stroke: #222729}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.4px Helvetica; color: #222729; -webkit-text-stroke: #222729}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.8px Helvetica; color: #fc508c; -webkit-text-stroke: #fc508c}
+    p.p6 {margin: 0.0px 0.0px 18.0px 0.0px; font: 16.8px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.4px 'Apple Color Emoji'; color: #222729; -webkit-text-stroke: #222729}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.2px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.2px Helvetica; color: #fc508c; -webkit-text-stroke: #fc508c; background-color: #ffffff}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.2px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.4px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; font: 48.0px Times; color: #222729; -webkit-text-stroke: #222729}
+    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 10.8px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #222729; -webkit-text-stroke: #222729}
+    p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #fc508c; -webkit-text-stroke: #fc508c}
+    p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 10.8px Helvetica; color: #fc508c; -webkit-text-stroke: #fc508c}
+    p.p19 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 15.6px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p20 {margin: 0.0px 0.0px 0.0px 0.0px; font: 24.0px 'Apple Color Emoji'; color: #222729; -webkit-text-stroke: #222729}
+    p.p22 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.6px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p24 {margin: 0.0px 0.0px 0.0px 0.0px; font: 15.6px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p25 {margin: 0.0px 0.0px 0.0px 0.0px; font: 120.0px Times; color: #222729; -webkit-text-stroke: #222729}
+    p.p27 {margin: 0.0px 0.0px 18.0px 0.0px; font: 14.4px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p28 {margin: 0.0px 0.0px 0.0px 0.0px; font: 60.0px 'Apple Color Emoji'; color: #222729; -webkit-text-stroke: #222729}
+    p.p29 {margin: 0.0px 0.0px 0.0px 0.0px; font: 24.0px Times; color: #222729; -webkit-text-stroke: #222729}
+    p.p30 {margin: 0.0px 0.0px 18.0px 0.0px; font: 13.2px Helvetica; color: #78818c; -webkit-text-stroke: #78818c}
+    p.p32 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 48.0px Times; color: #222729; -webkit-text-stroke: #222729}
+    p.p33 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.2px Helvetica; color: #fc508c; -webkit-text-stroke: #fc508c; background-color: #ffffff}
+    p.p34 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 10.2px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p35 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.2px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #ffffff}
+    p.p37 {margin: 0.0px 0.0px 36.0px 0.0px; text-align: center; font: 16.8px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p38 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.2px Helvetica; color: #fc508c; -webkit-text-stroke: #fc508c}
+    p.p40 {margin: 0.0px 0.0px 18.0px 0.0px; font: 12.0px Helvetica; color: #ffffff; color: rgba(255, 255, 255, 0.7); -webkit-text-stroke: rgba(255, 255, 255, 0.7)}
+    p.p43 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px Helvetica; color: #ffffff; color: rgba(255, 255, 255, 0.5); -webkit-text-stroke: rgba(255, 255, 255, 0.5)}
+    li.li2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.4px Helvetica; color: #222729; -webkit-text-stroke: #222729}
+    li.li15 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #222729; -webkit-text-stroke: #222729}
+    li.li42 {margin: 0.0px 0.0px 9.6px 0.0px; font: 12.0px Helvetica; color: #ffffff; color: rgba(255, 255, 255, 0.7); -webkit-text-stroke: rgba(255, 255, 255, 0.7)}
+    span.s1 {font-kerning: none; background-color: rgba(255, 251, 249, 0.9)}
+    span.s2 {background-color: rgba(255, 251, 249, 0.9); -webkit-text-stroke: 0px #000000}
+    span.s3 {font: 10.8px 'Apple Color Emoji'; font-kerning: none; background-color: #ffffff}
+    span.s4 {font-kerning: none; background-color: #ffffff}
+    span.s5 {font-kerning: none}
+    span.s6 {font-kerning: none; color: #222729; -webkit-text-stroke: 0px #222729}
+    span.s7 {font-kerning: none; background-color: #fededf}
+    span.s8 {font-kerning: none; background-color: #fff7f2}
+    span.s9 {background-color: #ffffff; -webkit-text-stroke: 0px #000000}
+    span.s10 {font: 18.0px 'Apple Color Emoji'; font-kerning: none; color: #ffffff; background-color: #ffffff; -webkit-text-stroke: 0px #ffffff}
+    span.s11 {font-kerning: none; color: #222729; background-color: #ffffff; -webkit-text-stroke: 0px #222729}
+    span.s12 {font-kerning: none; background-color: #222729}
+    span.s13 {background-color: #222729; -webkit-text-stroke: 0px #000000}
+    span.s14 {text-decoration: underline ; font-kerning: none; background-color: #222729}
+    ul.ul1 {list-style-type: disc}
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="logo">RelationCheck</div>
-        <ul class="nav-links">
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#disclaimer">Disclaimer</a></li>
-        </ul>
-        <a href="#pricing" class="cta-nav">Get Your Report</a>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <span class="hero-badge">✨ For Couples Who Want to Stay Strong</span>
-                <h1>Know Your Relationship Health <span class="gradient-text">Before It's Too Late</span></h1>
-                <p class="subtitle"><strong>Not ready for counseling?</strong> Get personalized insights and a clear roadmap to strengthen your relationship — without the stigma, cost, or commitment of therapy.</p>
-                
-                <div class="trust-indicators">
-                    <div class="trust-item">
-                        <div class="trust-icon">🔒</div>
-                        <div class="trust-text"><strong>100% Private</strong><br>Your data, your eyes only</div>
-                    </div>
-                    <div class="trust-item">
-                        <div class="trust-icon">⚡</div>
-                        <div class="trust-text"><strong>48-Hour Results</strong><br>Fast, actionable insights</div>
-                    </div>
-                    <div class="trust-item">
-                        <div class="trust-icon">💰</div>
-                        <div class="trust-text"><strong>From $57</strong><br>vs $3,000+ for therapy</div>
-                    </div>
-                </div>
-                
-                <div class="hero-buttons">
-                    <a href="#pricing" class="btn-primary">Get Your Relationship Report</a>
-                    <a href="#how-it-works" class="btn-secondary">See How It Works</a>
-                </div>
-                
-                <p class="disclaimer-mini">Not therapy. We provide relationship insights & roadmaps only.</p>
-            </div>
-            
-            <div class="hero-visual">
-                <div class="score-card">
-                    <div class="score-header">
-                        <h3>Your Relationship Health</h3>
-                        <p>Sample Assessment Result</p>
-                    </div>
-                    <div class="score-circle">
-                        <svg width="200" height="200">
-                            <circle cx="100" cy="100" r="90" fill="none" stroke="#FFE5E5" stroke-width="12"/>
-                            <circle cx="100" cy="100" r="90" fill="none" stroke="url(#gradient)" stroke-width="12" 
-                                    stroke-dasharray="565" stroke-dashoffset="169" 
-                                    transform="rotate(-90 100 100)" stroke-linecap="round"/>
-                            <defs>
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#FF6B9D"/>
-                                    <stop offset="100%" style="stop-color:#A8E6CF"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <div class="score-number">72</div>
-                    </div>
-                    <div class="score-label">Overall Relationship Health Score</div>
-                    
-                    <div class="score-breakdown">
-                        <div class="score-item">
-                            <span class="score-item-name">Communication</span>
-                            <span class="score-item-value">65/100</span>
-                        </div>
-                        <div class="score-item">
-                            <span class="score-item-name">Emotional Intimacy</span>
-                            <span class="score-item-value">78/100</span>
-                        </div>
-                        <div class="score-item">
-                            <span class="score-item-name">Conflict Resolution</span>
-                            <span class="score-item-value">58/100</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Problem Section -->
-    <section class="problem-section">
-        <div class="section-header">
-            <span class="section-badge">Why RelationCheck?</span>
-            <h2>You Don't Need to Wait Until Things Fall Apart</h2>
-            <p>Most couples wait 6 years before seeking help. By then, resentment runs deep. What if you could spot the cracks early?</p>
-        </div>
-        
-        <div class="problems-grid">
-            <div class="problem-card">
-                <div class="problem-icon">😰</div>
-                <h3>Scared of Counseling?</h3>
-                <p>You're not alone. Many couples feel therapy is "too serious" or worry about stigma. RelationCheck gives you insights privately, at your own pace.</p>
-            </div>
-            
-            <div class="problem-card">
-                <div class="problem-icon">💸</div>
-                <h3>Therapy Too Expensive?</h3>
-                <p>$150-300 per session × 10-20 sessions = $3,000+. Get personalized insights and a 12-month roadmap for as low as $57.</p>
-            </div>
-            
-            <div class="problem-card">
-                <div class="problem-icon">🔍</div>
-                <h3>Catch Problems Early</h3>
-                <p>Small issues become big crises. Our assessment detects patterns you might miss — communication gaps, attachment conflicts, hidden resentments.</p>
-            </div>
-            
-            <div class="problem-card">
-                <div class="problem-icon">📅</div>
-                <h3>No Scheduling Hassles</h3>
-                <p>No need to coordinate 3 schedules (you, partner, therapist). Complete assessments on your time, get results in 48 hours.</p>
-            </div>
-            
-            <div class="problem-card">
-                <div class="problem-icon">🎯</div>
-                <h3>Know What's Actually Wrong</h3>
-                <p>You fight about dishes, but that's not the real issue. We identify the 2-3 root causes beneath surface symptoms.</p>
-            </div>
-            
-            <div class="problem-card">
-                <div class="problem-icon">🗺️</div>
-                <h3>Get a Clear Roadmap</h3>
-                <p>Not just "what's wrong" but "what to do about it" — step-by-step action plan for the next 12 months.</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="section-header">
-            <span class="section-badge">Simple Process</span>
-            <h2>Get Your Relationship Health Check in 4 Steps</h2>
-            <p>No therapy appointment needed. Just honest answers.</p>
-        </div>
-        
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-number">01</div>
-                <div class="step-content">
-                    <h3>Both Partners Take Assessments</h3>
-                    <p>Separately, each partner completes personality tests, relationship satisfaction surveys, and pain point analysis (45-60 minutes).</p>
-                    <ul class="step-features">
-                        <li>Big Five personality traits</li>
-                        <li>Attachment style assessment</li>
-                        <li>Love languages & conflict styles</li>
-                        <li>50-question relationship survey</li>
-                        <li>Open-ended pain point exploration</li>
-                    </ul>
-                </div>
-                <div class="step-visual">📝</div>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">02</div>
-                <div class="step-content">
-                    <h3>Advanced Analysis of Your Patterns</h3>
-                    <p>Our system processes thousands of data points to identify communication mismatches, attachment conflicts, and hidden resentments.</p>
-                    <ul class="step-features">
-                        <li>Pattern detection across responses</li>
-                        <li>Compares both perspectives simultaneously</li>
-                        <li>Identifies root causes, not just symptoms</li>
-                        <li>Assesses relationship health indicators</li>
-                    </ul>
-                </div>
-                <div class="step-visual">📊</div>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">03</div>
-                <div class="step-content">
-                    <h3>Receive Your Comprehensive Report</h3>
-                    <p>Get a detailed analysis of your relationship dynamics with personalized recommendations you can share with your therapist if desired.</p>
-                    <ul class="step-features">
-                        <li>Clear breakdown of strengths and challenges</li>
-                        <li>Specific insights into your unique patterns</li>
-                        <li>Evidence-based recommendations</li>
-                        <li>Perfect resource to bring to couples therapy</li>
-                    </ul>
-                </div>
-                <div class="step-visual">📋</div>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">04</div>
-                <div class="step-content">
-                    <h3>Follow Your Personalized Roadmap</h3>
-                    <p>Receive a comprehensive 30-40 page report with your relationship health score, root causes identified, and a 12-month action plan.</p>
-                    <ul class="step-features">
-                        <li>Immediate 30-day action plan</li>
-                        <li>90-day transformation timeline</li>
-                        <li>12-month maintenance roadmap</li>
-                        <li>Conversation scripts & exercises</li>
-                        <li>Resources for professional help when needed</li>
-                    </ul>
-                </div>
-                <div class="step-visual">🗺️</div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Legal Disclaimer -->
-    <section class="disclaimer-section" id="disclaimer">
-        <div class="disclaimer-box">
-            <h3>
-                <div class="disclaimer-icon">⚖️</div>
-                Important Disclaimer
-            </h3>
-            <p><strong>RelationCheck is NOT therapy and we are NOT licensed counselors.</strong> We provide relationship assessment tools and educational resources designed to help couples understand their relationship dynamics and identify areas for improvement.</p>
-            
-            <ul class="disclaimer-list">
-                <li><strong>Educational Tool Only:</strong> Our assessments, analysis, and reports are for informational and educational purposes. They do not constitute professional therapy, counseling, or medical advice.</li>
-                
-                <li><strong>Not a Substitute for Professional Help:</strong> If you're experiencing crisis, abuse, severe mental health issues, or urgent relationship problems, please seek help from a licensed therapist, counselor, or mental health professional immediately.</li>
-                
-                <li><strong>No Therapist-Client Relationship:</strong> Using RelationCheck does not create a therapist-client relationship. Our reports are designed to help you understand your relationship better and can be shared with your therapist.</li>
-                
-                <li><strong>Use With Your Therapist:</strong> Many couples find our comprehensive reports helpful to bring to therapy sessions. The insights can accelerate progress by giving your therapist a detailed understanding of your relationship dynamics from day one.</li>
-                
-                <li><strong>Roadmap, Not Treatment:</strong> We provide a roadmap and suggestions based on relationship research and best practices. You are responsible for deciding which actions to take.</li>
-                
-                <li><strong>When to Seek Therapy:</strong> We will recommend professional therapy when appropriate. Our goal is to help you strengthen your relationship, and sometimes that means working with a qualified therapist.</li>
-                
-                <li><strong>Privacy & Confidentiality:</strong> Your data is encrypted and private. However, if we detect imminent risk of harm, we may be required to report to authorities as mandated by law.</li>
-            </ul>
-            
-            <p style="margin-top: 2rem;"><strong>Bottom Line:</strong> RelationCheck helps you understand your relationship health and provides actionable guidance. We're here to support your journey, not replace professional help when it's needed. Many couples use our reports alongside therapy for better outcomes.</p>
-        </div>
-    </section>
-    
-    <!-- Pricing -->
-    <section class="pricing-section" id="pricing">
-        <div class="section-header">
-            <span class="section-badge">Choose Your Package</span>
-            <h2>Start Strengthening Your Relationship Today</h2>
-            <p>All packages include both partners' assessments, comprehensive analysis, and personalized roadmap.</p>
-        </div>
-        
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Essential</h3>
-                <div class="pricing-price">$57</div>
-                <div class="pricing-period">One-time payment</div>
-                <ul class="pricing-features">
-                    <li>Both partners' assessments</li>
-                    <li>Comprehensive pattern analysis</li>
-                    <li>20-page relationship report</li>
-                    <li>30-day action plan</li>
-                    <li>Email support (7 days)</li>
-                    <li>Perfect for therapy preparation</li>
-                </ul>
-                <a href="#get-started" class="btn-secondary">Get Started</a>
-            </div>
-            
-            <div class="pricing-card popular">
-                <div class="popular-badge">MOST POPULAR</div>
-                <h3>Complete</h3>
-                <div class="pricing-price">$97</div>
-                <div class="pricing-period">One-time payment</div>
-                <ul class="pricing-features">
-                    <li>Everything in Essential</li>
-                    <li>In-depth guided assessment</li>
-                    <li>Enhanced analysis & insights</li>
-                    <li>Full 40-page detailed report</li>
-                    <li>12-month transformation roadmap</li>
-                    <li>Email support (30 days)</li>
-                    <li>Ideal for accelerating therapy</li>
-                </ul>
-                <a href="#get-started" class="btn-primary">Get Started</a>
-            </div>
-            
-            <div class="pricing-card">
-                <h3>Premium</h3>
-                <div class="pricing-price">$197</div>
-                <div class="pricing-period">One-time payment</div>
-                <ul class="pricing-features">
-                    <li>Everything in Complete</li>
-                    <li>Priority 24-hour analysis</li>
-                    <li>Quarterly progress check-ins (1 year)</li>
-                    <li>Personalized video summary</li>
-                    <li>Downloadable exercises library</li>
-                    <li>Email + chat support (90 days)</li>
-                    <li>Best for committed growth</li>
-                </ul>
-                <a href="#get-started" class="btn-secondary">Get Started</a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-content">
-            <h2>Don't Wait Until It's a Crisis</h2>
-            <p>Join thousands of couples who caught problems early and built stronger relationships.</p>
-            <a href="#pricing" class="btn-primary">Get Your Relationship Report Now</a>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3>RelationCheck</h3>
-                <p>Comprehensive relationship health assessments to help couples thrive, not just survive.</p>
-                <p><em>Not therapy. Educational relationship insights & roadmaps.</em></p>
-            </div>
-            
-            <div class="footer-column">
-                <h4>Product</h4>
-                <ul>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#disclaimer">Disclaimer</a></li>
-                    <li><a href="#faq">FAQs</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#terms">Terms of Service</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="#blog">Relationship Blog</a></li>
-                    <li><a href="#find-therapist">Find a Therapist</a></li>
-                    <li><a href="#crisis">Crisis Resources</a></li>
-                    <li><a href="#research">Our Research</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2026 RelationCheck. All rights reserved. | <strong>Disclaimer:</strong> Not therapy. Educational relationship tools only. | <a href="#privacy" style="color: rgba(255,255,255,0.5);">Privacy</a> | <a href="#terms" style="color: rgba(255,255,255,0.5);">Terms</a></p>
-        </div>
-    </footer>
-    
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-        
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.problem-card, .step, .pricing-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
+<p class="p1"><span class="s1"><b><span class="Apple-converted-space">  </span>RelationCheck<span class="Apple-converted-space"> </span></b><b></b></span></p>
+<ul class="ul1">
+  <li class="li2"><span class="s2"></span><span class="s1">How It Works</span></li>
+  <li class="li2"><span class="s2"></span><span class="s1">Pricing</span></li>
+  <li class="li2"><span class="s2"></span><span class="s1">Disclaimer</span></li>
+</ul>
+<p class="p3"><span class="s1"><b>Get Your Report</b><b></b></span></p>
+<p class="p4"><span class="s3">✨</span><span class="s4"><b> For Couples Who Want to Stay Strong</b><b></b></span></p>
+<h1 style="margin: 0.0px 0.0px 24.0px 0.0px; font: 42.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s5"><b>Know Your Relationship Health Before It's Too Late</b></span></h1>
+<p class="p6"><span class="s6"><b>Not ready for counseling?</b></span><span class="s5"> Get personalized insights and a clear roadmap to strengthen your relationship — without the stigma, cost, or commitment of therapy.</span></p>
+<p class="p7"><span class="s5">🔒</span></p>
+<p class="p2"><span class="s5"><b>100% Private</b><b></b></span></p>
+<p class="p2"><span class="s5">Your data, your eyes only</span></p>
+<p class="p7"><span class="s5">⚡</span></p>
+<p class="p2"><span class="s5"><b>48-Hour Results</b><b></b></span></p>
+<p class="p2"><span class="s5">Fast, actionable insights</span></p>
+<p class="p7"><span class="s5">💰</span></p>
+<p class="p2"><span class="s5"><b>From $57</b><b></b></span></p>
+<p class="p2"><span class="s5">vs $3,000+ for therapy</span></p>
+<p class="p8"><span class="s5"><b>Get Your Relationship Report</b></span></p>
+<p class="p9"><span class="s5"><b>See How It Works</b></span></p>
+<p class="p10"><span class="s5"><i>Not therapy. We provide relationship insights &amp; roadmaps only.</i></span></p>
+<h3 style="margin: 0.0px 0.0px 6.0px 0.0px; text-align: center; font: 21.6px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Your Relationship Health</b><b></b></span></h3>
+<p class="p12"><span class="s4">Sample Assessment Result</span></p>
+<p class="p13"><span class="s4"><b>72</b><b></b></span></p>
+<p class="p14"><span class="s4">Overall Relationship Health Score</span></p>
+<p class="p15"><span class="s7"><b>Communication</b><b></b></span></p>
+<p class="p16"><span class="s7"><b>65/100</b><b></b></span></p>
+<p class="p15"><span class="s7"><b>Emotional Intimacy</b><b></b></span></p>
+<p class="p16"><span class="s7"><b>78/100</b><b></b></span></p>
+<p class="p15"><span class="s7"><b>Conflict Resolution</b><b></b></span></p>
+<p class="p16"><span class="s7"><b>58/100</b><b></b></span></p>
+<p class="p17"><span class="s4"><b>Why RelationCheck?</b><b></b></span></p>
+<h2 style="margin: 0.0px 0.0px 18.0px 0.0px; text-align: center; font: 42.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s8"><b>You Don't Need to Wait Until Things Fall Apart</b><b></b></span></h2>
+<p class="p19"><span class="s8">Most couples wait 6 years before seeking help. By then, resentment runs deep. What if you could spot the cracks early?</span></p>
+<p class="p20"><span class="s4">😰</span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; font: 18.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Scared of Counseling?</b><b></b></span></h3>
+<p class="p22"><span class="s4">You're not alone. Many couples feel therapy is "too serious" or worry about stigma. RelationCheck gives you insights privately, at your own pace.</span></p>
+<p class="p20"><span class="s4">💸</span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; font: 18.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Therapy Too Expensive?</b><b></b></span></h3>
+<p class="p22"><span class="s4">$150-300 per session × 10-20 sessions = $3,000+. Get personalized insights and a 12-month roadmap for as low as $57.</span></p>
+<p class="p20"><span class="s4">🔍</span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; font: 18.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Catch Problems Early</b><b></b></span></h3>
+<p class="p22"><span class="s4">Small issues become big crises. Our assessment detects patterns you might miss — communication gaps, attachment conflicts, hidden resentments.</span></p>
+<p class="p20"><span class="s4">📅</span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; font: 18.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>No Scheduling Hassles</b><b></b></span></h3>
+<p class="p22"><span class="s4">No need to coordinate 3 schedules (you, partner, therapist). Complete assessments on your time, get results in 48 hours.</span></p>
+<p class="p20"><span class="s4">🎯</span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; font: 18.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Know What's Actually Wrong</b><b></b></span></h3>
+<p class="p22"><span class="s4">You fight about dishes, but that's not the real issue. We identify the 2-3 root causes beneath surface symptoms.</span></p>
+<p class="p20"><span class="s4">🗺️</span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; font: 18.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Get a Clear Roadmap</b><b></b></span></h3>
+<p class="p22"><span class="s4">Not just "what's wrong" but "what to do about it" — step-by-step action plan for the next 12 months.</span></p>
+<p class="p4"><span class="s4"><b>Simple Process</b><b></b></span></p>
+<h2 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 42.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Get Your Relationship Health Check in 4 Steps</b><b></b></span></h2>
+<p class="p24"><span class="s4">No therapy appointment needed. Just honest answers.</span></p>
+<p class="p25"><span class="s4"><b>01</b><b></b></span></p>
+<h3 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 30.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Both Partners Take Assessments</b><b></b></span></h3>
+<p class="p27"><span class="s4">Separately, each partner completes personality tests, relationship satisfaction surveys, and pain point analysis (45-60 minutes).</span></p>
+<ul class="ul1">
+  <li class="li15"><span class="s9"></span><span class="s4">Big Five personality traits</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Attachment style assessment</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Love languages &amp; conflict styles</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">50-question relationship survey</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Open-ended pain point exploration</span></li>
+</ul>
+<p class="p28"><span class="s4">📝</span></p>
+<p class="p25"><span class="s4"><b>02</b><b></b></span></p>
+<h3 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 30.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Advanced Analysis of Your Patterns</b><b></b></span></h3>
+<p class="p27"><span class="s4">Our system processes thousands of data points to identify communication mismatches, attachment conflicts, and hidden resentments.</span></p>
+<ul class="ul1">
+  <li class="li15"><span class="s9"></span><span class="s4">Pattern detection across responses</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Compares both perspectives simultaneously</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Identifies root causes, not just symptoms</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Assesses relationship health indicators</span></li>
+</ul>
+<p class="p28"><span class="s4">📊</span></p>
+<p class="p25"><span class="s4"><b>03</b><b></b></span></p>
+<h3 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 30.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Receive Your Comprehensive Report</b><b></b></span></h3>
+<p class="p27"><span class="s4">Get a detailed analysis of your relationship dynamics with personalized recommendations you can share with your therapist if desired.</span></p>
+<ul class="ul1">
+  <li class="li15"><span class="s9"></span><span class="s4">Clear breakdown of strengths and challenges</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Specific insights into your unique patterns</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Evidence-based recommendations</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Perfect resource to bring to couples therapy</span></li>
+</ul>
+<p class="p28"><span class="s4">📋</span></p>
+<p class="p25"><span class="s4"><b>04</b><b></b></span></p>
+<h3 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 30.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Follow Your Personalized Roadmap</b><b></b></span></h3>
+<p class="p27"><span class="s4">Receive a comprehensive 30-40 page report with your relationship health score, root causes identified, and a 12-month action plan.</span></p>
+<ul class="ul1">
+  <li class="li15"><span class="s9"></span><span class="s4">Immediate 30-day action plan</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">90-day transformation timeline</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">12-month maintenance roadmap</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Conversation scripts &amp; exercises</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Resources for professional help when needed</span></li>
+</ul>
+<p class="p28"><span class="s4">🗺️</span></p>
+<p class="p29"><span class="s10">⚖️</span><span class="s4"><b> Important Disclaimer</b><b></b></span></p>
+<p class="p30"><span class="s11"><b>RelationCheck is NOT therapy and we are NOT licensed counselors.</b></span><span class="s4"> We provide relationship assessment tools and educational resources designed to help couples understand their relationship dynamics and identify areas for improvement.</span></p>
+<ul class="ul1">
+  <li class="li15"><span class="s9"><b></b></span><span class="s4"><b>Educational Tool Only:</b> Our assessments, analysis, and reports are for informational and educational purposes. They do not constitute professional therapy, counseling, or medical advice.</span></li>
+  <li class="li15"><span class="s9"><b></b></span><span class="s4"><b>Not a Substitute for Professional Help:</b> If you're experiencing crisis, abuse, severe mental health issues, or urgent relationship problems, please seek help from a licensed therapist, counselor, or mental health professional immediately.</span></li>
+  <li class="li15"><span class="s9"><b></b></span><span class="s4"><b>No Therapist-Client Relationship:</b> Using RelationCheck does not create a therapist-client relationship. Our reports are designed to help you understand your relationship better and can be shared with your therapist.</span></li>
+  <li class="li15"><span class="s9"><b></b></span><span class="s4"><b>Use With Your Therapist:</b> Many couples find our comprehensive reports helpful to bring to therapy sessions. The insights can accelerate progress by giving your therapist a detailed understanding of your relationship dynamics from day one.</span></li>
+  <li class="li15"><span class="s9"><b></b></span><span class="s4"><b>Roadmap, Not Treatment:</b> We provide a roadmap and suggestions based on relationship research and best practices. You are responsible for deciding which actions to take.</span></li>
+  <li class="li15"><span class="s9"><b></b></span><span class="s4"><b>When to Seek Therapy:</b> We will recommend professional therapy when appropriate. Our goal is to help you strengthen your relationship, and sometimes that means working with a qualified therapist.</span></li>
+  <li class="li15"><span class="s9"><b></b></span><span class="s4"><b>Privacy &amp; Confidentiality:</b> Your data is encrypted and private. However, if we detect imminent risk of harm, we may be required to report to authorities as mandated by law.</span></li>
+</ul>
+<p class="p30"><span class="s11"><b>Bottom Line:</b></span><span class="s4"> RelationCheck helps you understand your relationship health and provides actionable guidance. We're here to support your journey, not replace professional help when it's needed. Many couples use our reports alongside therapy for better outcomes.</span></p>
+<p class="p4"><span class="s4"><b>Choose Your Package</b><b></b></span></p>
+<h2 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 42.0px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Start Strengthening Your Relationship Today</b><b></b></span></h2>
+<p class="p24"><span class="s4">All packages include both partners' assessments, comprehensive analysis, and personalized roadmap.</span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; text-align: center; font: 21.6px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Essential</b><b></b></span></h3>
+<p class="p32"><span class="s4"><b>$57</b><b></b></span></p>
+<p class="p12"><span class="s4">One-time payment</span></p>
+<ul class="ul1">
+  <li class="li15"><span class="s9"></span><span class="s4">Both partners' assessments</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Comprehensive pattern analysis</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">20-page relationship report</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">30-day action plan</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Email support (7 days)</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Perfect for therapy preparation</span></li>
+</ul>
+<p class="p33"><span class="s5"><b>Get Started</b><b></b></span></p>
+<p class="p34"><span class="s4"><b>MOST POPULAR</b><b></b></span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; text-align: center; font: 21.6px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Complete</b><b></b></span></h3>
+<p class="p32"><span class="s4"><b>$97</b><b></b></span></p>
+<p class="p12"><span class="s4">One-time payment</span></p>
+<ul class="ul1">
+  <li class="li15"><span class="s9"></span><span class="s4">Everything in Essential</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">In-depth guided assessment</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Enhanced analysis &amp; insights</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Full 40-page detailed report</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">12-month transformation roadmap</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Email support (30 days)</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Ideal for accelerating therapy</span></li>
+</ul>
+<p class="p35"><span class="s5"><b>Get Started</b><b></b></span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; text-align: center; font: 21.6px Times; color: #222729; -webkit-text-stroke: #222729"><span class="s4"><b>Premium</b><b></b></span></h3>
+<p class="p32"><span class="s4"><b>$197</b><b></b></span></p>
+<p class="p12"><span class="s4">One-time payment</span></p>
+<ul class="ul1">
+  <li class="li15"><span class="s9"></span><span class="s4">Everything in Complete</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Priority 24-hour analysis</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Quarterly progress check-ins (1 year)</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Personalized video summary</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Downloadable exercises library</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Email + chat support (90 days)</span></li>
+  <li class="li15"><span class="s9"></span><span class="s4">Best for committed growth</span></li>
+</ul>
+<p class="p33"><span class="s5"><b>Get Started</b><b></b></span></p>
+<h2 style="margin: 0.0px 0.0px 24.0px 0.0px; text-align: center; font: 48.0px Times; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s5"><b>Don't Wait Until It's a Crisis</b></span></h2>
+<p class="p37"><span class="s5">Join thousands of couples who caught problems early and built stronger relationships.</span></p>
+<p class="p38"><span class="s4"><b>Get Your Relationship Report Now</b><b></b></span></p>
+<h3 style="margin: 0.0px 0.0px 12.0px 0.0px; font: 24.0px Times; color: #ffffff; color: rgba(255, 255, 255, 0.7); -webkit-text-stroke: rgba(255, 255, 255, 0.7)"><span class="s12"><b>RelationCheck</b><b></b></span></h3>
+<p class="p40"><span class="s12">Comprehensive relationship health assessments to help couples thrive, not just survive.</span></p>
+<p class="p40"><span class="s12"><i>Not therapy. Educational relationship insights &amp; roadmaps.</i><i></i></span></p>
+<h4 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 12.0px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s12"><b>Product</b><b></b></span></h4>
+<ul class="ul1">
+  <li class="li42"><span class="s13"></span><span class="s12">How It Works</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">Pricing</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">Disclaimer</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">FAQs</span></li>
+</ul>
+<h4 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 12.0px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s12"><b>Company</b><b></b></span></h4>
+<ul class="ul1">
+  <li class="li42"><span class="s13"></span><span class="s12">About Us</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">Privacy Policy</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">Terms of Service</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">Contact</span></li>
+</ul>
+<h4 style="margin: 0.0px 0.0px 18.0px 0.0px; font: 12.0px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s12"><b>Resources</b><b></b></span></h4>
+<ul class="ul1">
+  <li class="li42"><span class="s13"></span><span class="s12">Relationship Blog</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">Find a Therapist</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">Crisis Resources</span></li>
+  <li class="li42"><span class="s13"></span><span class="s12">Our Research</span></li>
+</ul>
+<p class="p43"><span class="s12">© 2026 RelationCheck. All rights reserved. | <b>Disclaimer:</b> Not therapy. Educational relationship tools only. | </span><span class="s14">Privacy</span><span class="s12"> | </span><span class="s14">Terms</span></p>
 </body>
 </html>
