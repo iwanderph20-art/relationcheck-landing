@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essential Package - RelationCheck</title>
+    <style>
+        :root {
+            --blush: #FFE5E5;
+            --rose: #FF6B9D;
+            --deep-rose: #C7305C;
+            --mint: #A8E6CF;
+            --sage: #6B8E7F;
+            --cream: #FFF9F5;
+            --warm-white: #FFFCFA;
+            --charcoal: #2D3436;
+            --soft-gray: #8B949E;
+            --coral: #FF8A80;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--warm-white);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Recoleta', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: var(--warm-white);
+            border-bottom: 1px solid #f0f0f0;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--deep-rose);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--charcoal);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--rose);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 3rem 2rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .package-badge {
+            display: inline-block;
+            background-color: var(--blush);
+            color: var(--deep-rose);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--soft-gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-display {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--rose);
+        }
+
+        .price-tag {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--deep-rose);
+            line-height: 1;
+        }
+
+        .price-period {
+            color: var(--soft-gray);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--rose);
+            color: white;
+            width: 100%;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--deep-rose);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(255, 107, 157, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--rose);
+            border: 2px solid var(--rose);
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--blush);
+            transform: translateY(-2px);
+        }
+
+        /* Content Section */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--charcoal);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background-color: var(--cream);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--rose);
+        }
+
+        .feature-card h3 {
+            color: var(--deep-rose);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            color: var(--soft-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Details Section */
+        .details-section {
+            background-color: var(--cream);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .details-section h3 {
+            color: var(--deep-rose);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .details-list {
+            list-style: none;
+        }
+
+        .details-list li {
+            padding: 0.75rem 0;
+            color: var(--charcoal);
+            font-size: 0.95rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .details-list li:before {
+            content: "â";
+            color: var(--sage);
+            font-weight: 700;
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .details-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            background-color: var(--blush);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+        }
+
+        .comparison-box {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .comparison-box h4 {
+            color: var(--charcoal);
+            margin-bottom: 0.75rem;
+        }
+
+        .price-comparison {
+            font-size: 1.5rem;
+            color: var(--deep-rose);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .upgrade-text {
+            color: var(--soft-gray);
+            font-size: 0.9rem;
+        }
+
+        .comparison-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .comparison-links a {
+            padding: 0.75rem 1.5rem;
+            background-color: white;
+            color: var(--rose);
+            border: 2px solid var(--rose);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-links a:hover {
+            background-color: var(--rose);
+            color: white;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: var(--cream);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid #f0f0f0;
+        }
+
+        .faq-item:hover {
+            border-left-color: var(--rose);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-item h4 {
+            color: var(--charcoal);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        .faq-item p {
+            color: var(--soft-gray);
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .faq-toggle {
+            color: var(--rose);
+            font-weight: 700;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--rose) 0%, var(--deep-rose) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 12px;
+            margin: 3rem 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-cta {
+            background-color: white;
+            color: var(--deep-rose);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+        }
+
+        .btn-cta:hover {
+            background-color: var(--cream);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--charcoal);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--rose);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .price-tag {
+                font-size: 2.5rem;
+            }
+
+            .comparison-links {
+                flex-direction: column;
+            }
+
+            .comparison-links a {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-logo">RelationCheck</a>
+        <ul class="nav-links">
+            <li><a href="/#features">Features</a></li>
+            <li><a href="/#how-it-works">How It Works</a></li>
+            <li><a href="/#pricing">Pricing</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="package-badge">Essential Package</div>
+        <h1>The Foundation for Understanding</h1>
+        <p class="hero-subtitle">Get comprehensive insights into your relationship dynamics with our foundational assessment package.</p>
+
+        <div class="pricing-display">
+            <div class="price-tag">$39</div>
+            <div class="price-period">One-time payment</div>
+        </div>
+
+        <a href="/assessment/essential" class="btn btn-primary">Start Your Assessment</a>
+        <a href="/#pricing" class="btn btn-secondary">View All Packages</a>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">What's Included</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Dual Assessment</h3>
+                <p>Both partners complete a comprehensive questionnaire to capture diverse perspectives on your relationship.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Pattern Analysis</h3>
+                <p>Our algorithm identifies communication patterns, emotional dynamics, and interaction styles.</p>
+            </div>
+            <div class="feature-card">
+                <h3>20-Page Report</h3>
+                <p>Receive a detailed written report with visualizations and score breakdowns across all relationship areas.</p>
+            </div>
+            <div class="feature-card">
+                <h3>30-Day Action Plan</h3>
+                <p>Get daily exercises and activities you can implement to strengthen your connection over the next month.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Email Support (7 Days)</h3>
+                <p>Our support team is available to answer questions about your report and recommendations for 7 days.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Therapy Preparation</h3>
+                <p>Receive guidance on how to use your assessment results if you decide to work with a therapist.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Your 20-Page Report</h2>
+
+        <div class="details-section">
+            <h3>What You'll Learn</h3>
+            <ul class="details-list">
+                <li>Overall relationship score and health indicators</li>
+                <li>Communication quality assessment</li>
+                <li>Emotional intimacy analysis</li>
+                <li>Conflict resolution patterns</li>
+                <li>Strengths and areas for growth</li>
+                <li>Comparison of partner perspectives</li>
+                <li>Key insights and patterns identified</li>
+                <li>Personalized recommendations</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Your 30-Day Action Plan</h2>
+
+        <div class="details-section">
+            <h3>Daily Exercises & Activities</h3>
+            <ul class="details-list">
+                <li>Structured communication exercises for couples</li>
+                <li>Emotional intimacy-building activities</li>
+                <li>Conflict resolution practices</li>
+                <li>Date night ideas aligned with your goals</li>
+                <li>Journaling prompts and reflection exercises</li>
+                <li>Progress tracking tools</li>
+                <li>Milestone celebrations at key points</li>
+                <li>Resources for deeper exploration</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="comparison-section">
+        <h2 class="section-title">How It Compares</h2>
+
+        <div class="comparison-box">
+            <h4>Upgrade to Complete</h4>
+            <div class="price-comparison">$59</div>
+            <div class="upgrade-text">Only $20 more for a 40-page report, 12-month roadmap, and extended support</div>
+        </div>
+
+        <div class="comparison-box">
+            <h4>Upgrade to Premium</h4>
+            <div class="price-comparison">$89</div>
+            <div class="upgrade-text">Only $50 more for a 60-page report, 24-month roadmap, video guidance, and quarterly check-ins</div>
+        </div>
+
+        <div class="comparison-links">
+            <a href="/complete">View Complete Package</a>
+            <a href="/premium">View Premium Package</a>
+        </div>
+    </section>
+
+    <section class="section faq-section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+
+        <div class="faq-item active">
+            <h4>
+                How long does the assessment take?
+                <span class="faq-toggle">â</span>
+            </h4>
+            <p>Most couples complete the assessment in 30-45 minutes. You can take it at your own pace and save your progress to complete later if needed.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>
+                When will I receive my report?
+                <span class="faq-toggle">+</span>
+            </h4>
+            <p>Your comprehensive report is generated within minutes of completing the assessment. You'll have immediate access to download and review it.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>
+                Is my information secure and private?
+                <span class="faq-toggle">+</span>
+            </h4>
+            <p>Yes, absolutely. All your data is encrypted with industry-standard security. We never sell or share your personal information with third parties.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>
+                Can I upgrade to a higher package later?
+                <span class="faq-toggle">+</span>
+            </h4>
+            <p>Yes, you can upgrade at any time. We'll credit your current purchase toward the upgrade and only charge you the difference.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>
+                What if we're not both ready to participate?
+                <span class="faq-toggle">+</span>
+            </h4>
+            <p>We offer individual assessments that provide insights into your relationship from your perspective alone, though dual assessments provide more comprehensive insights.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>
+                Is this a substitute for therapy?
+                <span class="faq-toggle">+</span>
+            </h4>
+            <p>No, RelationCheck is designed as an educational assessment tool, not a replacement for professional therapy. Many couples use it in preparation for working with a therapist.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Ready to Understand Your Relationship?</h2>
+        <p>Start your Essential assessment today and receive your personalized report in minutes.</p>
+        <a href="/assessment/essential" class="btn btn-cta">Get Started - $39</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 RelationCheck. All rights reserved.</p>
+        <p><a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const toggle = this.querySelector('.faq-toggle');
+                toggle.textContent = this.classList.contains('active') ? 'â' : '+';
+            });
+        });
+    </script>
+</body>
+</html>
